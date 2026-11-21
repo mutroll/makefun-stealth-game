@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The Quiet Archive — a top-down stealth game: sneak past the archivist-guards, collect the seal fragments, and reach the green exit unseen.">
+<title>The Quiet Archive — a stealth game</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #070a14; }
+  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; object-fit: contain; }
+  /* Read aloud, never shown: the status line screen readers announce. */
+  #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+</style>
+</head>
+<body>
+<canvas id="game" aria-label="The Quiet Archive: sneak past the archivist-guards and their torch cones, collect the seal fragments, and reach the green exit unseen"></canvas>
+<p id="status" role="status" aria-live="polite"></p>
+<noscript><p style="color:#e8ecf7;font:16px sans-serif;text-align:center;margin-top:40vh">The Quiet Archive needs JavaScript to play.</p></noscript>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
