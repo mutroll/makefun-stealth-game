@@ -6,7 +6,7 @@
 //
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 // Outside the grader, MAKEFUN_OUTPUT_DIR stands in for /output.
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-game.ts';
@@ -20,8 +20,12 @@ if (!existsSync(gameSource)) throw new Error('game/ is missing from the reposito
 if (!existsSync(shotsSource)) throw new Error('screenshots/ is missing from the repository');
 
 // Start from an empty output directory, so a stale file can never ride along.
-rmSync(outputDir, { recursive: true, force: true });
+// Only the contents are removed, never the directory itself: in the grader the
+// output directory sits on a read-only root, so removing it there fails.
 mkdirSync(outputDir, { recursive: true });
+for (const entry of readdirSync(outputDir)) {
+  rmSync(join(outputDir, entry), { recursive: true, force: true });
+}
 
 cpSync(gameSource, join(outputDir, 'game'), { recursive: true });
 cpSync(shotsSource, join(outputDir, 'screenshots'), { recursive: true });
